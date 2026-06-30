@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Project One",
+    "description": "A useful digital thing with a clear purpose and a tidy interface.",
+    "url": "https://example.com",
+    "tags": ["Astro", "TypeScript"],
+    "year": "2026",
+    "featured": true
+  },
+  {
+    "title": "Project Two",
+    "description": "An experiment in interaction, motion, and small details.",
+    "url": "https://example.com",
+    "tags": ["Three.js", "Animation"],
+    "year": "2025",
+    "featured": false
+  }
+]

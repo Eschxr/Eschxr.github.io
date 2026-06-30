@@ -1,0 +1,28 @@
+{
+  "name": "personal-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "check": "astro check",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.2",
+    "@dimforge/rapier3d-compat": "^0.15.0",
+    "astro": "^7.0.4",
+    "gsap": "^3.12.5",
+    "html2canvas": "^1.4.1",
+    "three": "^0.171.0",
+    "typescript": "^5.7.2"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true,
+    "sharp@0.34.5": true
+  },
+  "devDependencies": {
+    "@types/three": "^0.185.0"
+  }
+}

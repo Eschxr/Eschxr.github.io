@@ -1,0 +1,47 @@
+---
+import PlainContent from "../content/plain.md";
+import { projects, site } from "../lib/content";
+---
+
+<main id="plain-site" class="plain-site" data-site-state="plain">
+  <header class="plain-header">
+    <p class="plain-kicker">{site.tagline}</p>
+    <h1>{site.name}</h1>
+  </header>
+
+  <section class="plain-section" aria-labelledby="intro-heading">
+    <h2 id="intro-heading">Intro</h2>
+    <PlainContent />
+  </section>
+
+  <section class="plain-section" aria-labelledby="projects-heading">
+    <h2 id="projects-heading">Projects</h2>
+    <ul class="plain-projects">
+      {projects.map((project) => (
+        <li>
+          <h3>
+            <a href={project.url}>{project.title}</a>
+          </h3>
+          <p>{project.description}</p>
+          <p class="plain-meta">
+            <span>{project.year}</span>
+            <span>{project.tags.join(", ")}</span>
+          </p>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="plain-section" aria-labelledby="contact-heading">
+    <h2 id="contact-heading">Contact</h2>
+    <address class="plain-contact">
+      <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+      <a href={site.contact.github}>GitHub</a>
+      <a href={site.contact.linkedin}>LinkedIn</a>
+    </address>
+  </section>
+
+  <footer class="plain-footer">
+    <p>{site.footer}</p>
+  </footer>
+</main>

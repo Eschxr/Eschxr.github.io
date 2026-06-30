@@ -1,2 +1,13 @@
 # personal-website
-Just my personal website, hosted on GitHub pages
+
+Static Astro portfolio.
+
+## Commands
+
+```bash
+npm run dev
+npm run check
+npm run build
+```
+
+Deployment notes live in `docs/DEPLOYMENT.md`.

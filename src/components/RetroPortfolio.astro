@@ -1,0 +1,42 @@
+---
+import RetroContent from "../content/retro.md";
+import { projects, site } from "../lib/content";
+---
+
+<section id="retro-site" class="retro-site" aria-labelledby="retro-title" hidden>
+  <div class="retro-shell">
+    <header class="retro-header">
+      <p class="retro-marquee">*** UNDER CONSTRUCTION *** BEST VIEWED WITH CURIOSITY ***</p>
+      <h2 id="retro-title">{site.name}'s Home Page</h2>
+      <p>{site.tagline}</p>
+    </header>
+
+    <div class="retro-panel retro-copy">
+      <RetroContent />
+    </div>
+
+    <section class="retro-panel" aria-labelledby="retro-projects-heading">
+      <h3 id="retro-projects-heading">Cool Links</h3>
+      <ul class="retro-projects">
+        {projects.map((project) => (
+          <li>
+            <a href={project.url}>{project.title}</a>
+            <span>{project.year}</span>
+            <p>{project.description}</p>
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <footer class="retro-footer">
+      <p class="retro-counter">{site.retroVisitorCounter}</p>
+      <p>
+        <a href={`mailto:${site.contact.email}`}>Email Me</a>
+        {" | "}
+        <a href={site.contact.github}>GitHub</a>
+        {" | "}
+        <a href={site.contact.linkedin}>LinkedIn</a>
+      </p>
+    </footer>
+  </div>
+</section>

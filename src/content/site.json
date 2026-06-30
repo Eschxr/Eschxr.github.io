@@ -1,0 +1,11 @@
+{
+  "name": "Your Name",
+  "tagline": "Designer / Developer / Builder",
+  "contact": {
+    "email": "hello@example.com",
+    "github": "https://github.com/example",
+    "linkedin": "https://linkedin.com/in/example"
+  },
+  "footer": "Built with Astro, Three.js, and questionable taste.",
+  "retroVisitorCounter": "000042 visitors since 1996"
+}
