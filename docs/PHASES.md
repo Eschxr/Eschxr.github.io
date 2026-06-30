@@ -66,4 +66,5 @@ Complete
 - Added GitHub Pages deployment documentation and workflow.
 - Configured Astro base-path handling for project pages and user pages.
 - Added `npm run check` for Astro/TypeScript validation.
+- After inspecting GitHub Pages logs, hardened deployment docs/workflow for the required `GitHub Actions` Pages source and added a `.nojekyll` marker to the static artifact.
 - Verified with `ASTRO_TELEMETRY_DISABLED=1 npm run check` and `ASTRO_TELEMETRY_DISABLED=1 npm run build`.

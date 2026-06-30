@@ -15,8 +15,18 @@ The generated site is written to `dist/`.
 
 The included GitHub Actions workflow builds the site and deploys `dist/` to GitHub Pages.
 
+In the repository settings, set:
+
+```txt
+Settings -> Pages -> Build and deployment -> Source -> GitHub Actions
+```
+
+Do not use `Deploy from a branch` for this repository. Branch-based Pages deployment runs GitHub's default Jekyll builder against the repository root, which cannot parse Astro component frontmatter in `src/**/*.astro`.
+
 For a project repository, `astro.config.mjs` derives `base` from `GITHUB_REPOSITORY`, so assets are served under `/<repository-name>/`.
 
 For a user site repository named `USERNAME.github.io`, no base path is applied.
 
 To override the base path manually, set the `PUBLIC_BASE_PATH` repository variable or workflow environment value.
+
+The build includes `public/.nojekyll`, which is copied into `dist/` to prevent Jekyll processing of the uploaded static artifact.
