@@ -59,11 +59,16 @@ async function revealRetro() {
   window.clearTimeout(crackTimer);
   setState("orbFound");
   announce("Retro site revealed.");
-  const { playRetroRevealTransition } = await import("../lib/shatter/transitions");
 
-  await playRetroRevealTransition({ reducedMotion });
-  shatterHandle?.destroy();
-  shatterHandle = undefined;
+  try {
+    const { playRetroRevealTransition } = await import("../lib/shatter/transitions");
+    await playRetroRevealTransition({ reducedMotion });
+  } catch (error) {
+    console.error("Unable to play retro reveal transition", error);
+  } finally {
+    shatterHandle?.destroy();
+    shatterHandle = undefined;
+  }
 
   if (plainSite) {
     plainSite.hidden = true;

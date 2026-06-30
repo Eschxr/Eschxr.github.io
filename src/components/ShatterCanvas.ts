@@ -25,9 +25,9 @@ export interface ShatterHandle {
 function getShardCount() {
   const width = window.innerWidth;
 
-  if (width < 640) return 36;
-  if (width < 1024) return 72;
-  return 120;
+  if (width < 640) return 84;
+  if (width < 1024) return 144;
+  return 220;
 }
 
 export async function startShatterExperience(options: StartShatterOptions): Promise<ShatterHandle> {

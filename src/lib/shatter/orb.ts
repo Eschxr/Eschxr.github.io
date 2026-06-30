@@ -28,22 +28,27 @@ export interface CreateHiddenOrbOptions {
   onClicked: () => void;
 }
 
+const ORB_APPEAR_DELAY_SECONDS = 2.5;
+
 export function createHiddenOrb(options: CreateHiddenOrbOptions): HiddenOrb {
   const group = new Group();
-  const x = options.viewportWidth * 0.18;
-  const y = options.viewportHeight * -0.12;
+  const x = 0;
+  const y = 0;
   const z = 58;
   group.position.set(x, y, z);
+  group.visible = false;
 
   const orbGeometry = new SphereGeometry(18, 32, 16);
   const orbMaterial = new MeshStandardMaterial({
     color: "#7fffd4",
     emissive: "#00ffd5",
     emissiveIntensity: 0.75,
+    depthTest: false,
     roughness: 0.25,
     metalness: 0.05
   });
   const orb = new Mesh(orbGeometry, orbMaterial);
+  orb.renderOrder = 20;
 
   const glowGeometry = new SphereGeometry(38, 32, 16);
   const glowMaterial = new MeshBasicMaterial({
@@ -52,11 +57,13 @@ export function createHiddenOrb(options: CreateHiddenOrbOptions): HiddenOrb {
     opacity: 0.14,
     blending: AdditiveBlending,
     side: BackSide,
+    depthTest: false,
     depthWrite: false
   });
   const glow = new Mesh(glowGeometry, glowMaterial);
+  glow.renderOrder = 19;
 
-  const hitGeometry = new SphereGeometry(44, 16, 8);
+  const hitGeometry = new SphereGeometry(68, 16, 8);
   const hitMaterial = new MeshBasicMaterial({
     transparent: true,
     opacity: 0,
@@ -73,6 +80,16 @@ export function createHiddenOrb(options: CreateHiddenOrbOptions): HiddenOrb {
   const pointer = new Vector2();
   let hovered = false;
   let destroyed = false;
+  const screenPosition = new Vector2();
+
+  function updateScreenPosition() {
+    group.updateWorldMatrix(true, false);
+    const projected = group.getWorldPosition(group.position.clone()).project(options.camera);
+    screenPosition.set(
+      ((projected.x + 1) / 2) * options.canvas.clientWidth,
+      ((-projected.y + 1) / 2) * options.canvas.clientHeight
+    );
+  }
 
   function setPointer(event: PointerEvent) {
     const rect = options.canvas.getBoundingClientRect();
@@ -83,18 +100,28 @@ export function createHiddenOrb(options: CreateHiddenOrbOptions): HiddenOrb {
   function intersectsOrb(event: PointerEvent) {
     setPointer(event);
     raycaster.setFromCamera(pointer, options.camera);
-    return raycaster.intersectObject(hitTarget, false).length > 0;
+    const rayHit = raycaster.intersectObject(hitTarget, false).length > 0;
+
+    if (rayHit) return true;
+
+    updateScreenPosition();
+    const rect = options.canvas.getBoundingClientRect();
+    const localX = event.clientX - rect.left;
+    const localY = event.clientY - rect.top;
+    const generousRadius = Math.max(72, Math.min(options.viewportWidth, options.viewportHeight) * 0.085);
+
+    return screenPosition.distanceTo(new Vector2(localX, localY)) <= generousRadius;
   }
 
   function handlePointerMove(event: PointerEvent) {
     if (destroyed) return;
 
-    hovered = intersectsOrb(event);
+    hovered = group.visible && intersectsOrb(event);
     options.canvas.style.cursor = hovered ? "pointer" : "";
   }
 
   function handlePointerDown(event: PointerEvent) {
-    if (destroyed || !intersectsOrb(event)) return;
+    if (destroyed || !group.visible || !intersectsOrb(event)) return;
 
     event.preventDefault();
     options.onClicked();
@@ -106,6 +133,13 @@ export function createHiddenOrb(options: CreateHiddenOrbOptions): HiddenOrb {
   return {
     group,
     update(elapsedSeconds: number) {
+      group.visible = elapsedSeconds >= ORB_APPEAR_DELAY_SECONDS;
+
+      if (!group.visible) {
+        options.canvas.style.cursor = "";
+        return;
+      }
+
       const delayBoost = elapsedSeconds > 5 ? 0.55 : elapsedSeconds > 2 ? 0.28 : 0;
       const pulse = (Math.sin(elapsedSeconds * 3.1) + 1) / 2;
       const hoverBoost = hovered ? 0.5 : 0;

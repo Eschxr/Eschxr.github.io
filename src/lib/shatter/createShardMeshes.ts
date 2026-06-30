@@ -29,7 +29,7 @@ function jitter(value: number, amount: number) {
 
 function createCells(viewportWidth: number, viewportHeight: number, shardCount: number) {
   const aspect = viewportWidth / viewportHeight;
-  const columns = Math.max(4, Math.round(Math.sqrt(shardCount * aspect)));
+  const columns = Math.max(6, Math.round(Math.sqrt(shardCount * aspect)));
   const rows = Math.max(4, Math.ceil(shardCount / columns));
   const cellWidth = viewportWidth / columns;
   const cellHeight = viewportHeight / rows;
@@ -45,8 +45,8 @@ function createCells(viewportWidth: number, viewportHeight: number, shardCount: 
       cells.push({
         x: rightEdge ? x : Math.max(0, jitter(x, cellWidth * 0.2)),
         y: bottomEdge ? y : Math.max(0, jitter(y, cellHeight * 0.2)),
-        width: rightEdge ? viewportWidth - x : cellWidth * (0.86 + Math.random() * 0.24),
-        height: bottomEdge ? viewportHeight - y : cellHeight * (0.86 + Math.random() * 0.24)
+        width: rightEdge ? viewportWidth - x : cellWidth * (0.72 + Math.random() * 0.18),
+        height: bottomEdge ? viewportHeight - y : cellHeight * (0.72 + Math.random() * 0.18)
       });
     }
   }
@@ -107,8 +107,8 @@ export function createShardMeshes(options: CreateShardMeshesOptions) {
     mesh.userData.scatterX = mesh.position.x + (Math.random() - 0.5) * options.viewportWidth * 0.22;
     mesh.userData.scatterY = mesh.position.y - Math.random() * options.viewportHeight * 0.22;
     mesh.userData.scatterZ = 80 + Math.random() * 160;
-    mesh.userData.rotationX = (Math.random() - 0.5) * 1.6;
-    mesh.userData.rotationY = (Math.random() - 0.5) * 1.6;
+    mesh.userData.rotationX = (Math.random() - 0.5) * 0.6;
+    mesh.userData.rotationY = (Math.random() - 0.5) * 0.6;
     mesh.userData.rotationZ = (Math.random() - 0.5) * 0.8;
 
     return mesh;

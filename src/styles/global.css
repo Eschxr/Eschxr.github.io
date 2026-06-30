@@ -49,6 +49,7 @@ button:focus-visible {
   inset: 0;
   z-index: 15;
   pointer-events: auto;
+  background: #000;
 }
 
 .shatter-host canvas {
@@ -82,7 +83,7 @@ button:focus-visible {
 
 @keyframes retro-static {
   0% {
-    filter: contrast(1.1) brightness(1);
+    filter: contrast(1.1) brightness(1.01);
     transform: translateY(0);
   }
 
