@@ -67,4 +67,5 @@ Complete
 - Configured Astro base-path handling for project pages and user pages.
 - Added `npm run check` for Astro/TypeScript validation.
 - After inspecting GitHub Pages logs, hardened deployment docs/workflow for the required `GitHub Actions` Pages source and added a `.nojekyll` marker to the static artifact.
+- After the next deploy log showed `actions/configure-pages@v5` failing before install with `TypeError: error must be an instance of Error`, removed that optional action and kept Pages source configuration as a repository setting.
 - Verified with `ASTRO_TELEMETRY_DISABLED=1 npm run check` and `ASTRO_TELEMETRY_DISABLED=1 npm run build`.
